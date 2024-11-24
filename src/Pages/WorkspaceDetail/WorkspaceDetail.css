@@ -1,0 +1,21 @@
+.contenedor-workspace-detail {
+    background-color: #111118;
+    height: 100vh;    
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.contenedor-principal {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    overflow: hidden;
+}
+
+@media (max-width: 768px) {
+    .contenedor-principal {
+        flex-direction: column;
+        overflow: auto; 
+    }
+}

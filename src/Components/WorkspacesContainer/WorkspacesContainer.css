@@ -1,0 +1,136 @@
+.workspaces-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #191A23;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    max-width: 900px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.workspaces-header {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.titulo-header {
+    color: #f3f3f3;
+    padding: 15px;
+    font-size: 20px;
+}
+
+
+.lista-entornos {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+
+.workspace-item-container {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    background-color: #f3f3f3; 
+    border-radius: 4px; 
+}
+
+
+.crear-workspace-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.crear-workspace-container p {
+    color: #ffffff;
+    padding-bottom: 5px;
+    font-size: 16px;
+}
+
+.btn-crear-nuevo {
+    background-color: #b9ff66;
+    color: #191A23;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 4px;
+    text-decoration: none;
+}
+
+.btn-crear-nuevo:hover {
+    background-color: #a5f051;
+}
+
+@media (max-width:480px) {
+    .workspaces-container {
+        padding: 10px;
+    }
+
+    .workspaces-header {
+        margin-bottom: 15px;
+    }
+
+    .titulo-header {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .lista-entornos {
+        gap: 5px;
+    }
+
+    .workspace-item-container {
+        padding: 8px;
+    }
+
+    .crear-workspace-container {
+        margin-top: 15px;
+    }
+
+    .crear-workspace-container p {
+        font-size: 13px;
+    }
+
+    .btn-crear-nuevo {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+    .workspaces-container {
+        padding: 15px;
+    }
+
+    .workspaces-header {
+        margin-bottom: 18px;
+    }
+
+    .titulo-header {
+        font-size: 19px;
+        padding: 12px;
+    }
+
+    .lista-entornos {
+        gap: 6px;
+    }
+
+    .workspace-item-container {
+        padding: 9px;
+    }
+
+    .crear-workspace-container {
+        margin-top: 18px;
+    }
+
+    .btn-crear-nuevo {
+        padding: 9px 18px;
+        font-size: 15px;
+    }
+}

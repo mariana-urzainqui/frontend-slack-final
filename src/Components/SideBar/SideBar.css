@@ -1,0 +1,252 @@
+.side-bar {
+    width: 250px;
+    background-color: #222330;
+    color: #F3F3F3;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    border-top-left-radius: 15px;
+    transition: all 0.3 ease;
+    overflow: hidden;
+}
+
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 3px;
+    background-color: #222330;
+}
+
+.nombre-entorno-sb {
+    font-size: 18px;
+    font-weight: 800;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.menu-toggle-btn {
+    background-color: transparent;
+    color: #F3F3F3;
+    font-size: 24px;
+    border: none;
+    cursor: pointer;
+    display: none;
+}
+
+.sidebar-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow-y: auto;
+    padding-top: 15px;
+    max-height: 0;
+    transition: max-height 0.3s ease;
+}
+
+
+.menu-abierto .sidebar-content {
+    max-height: 500px;
+}
+
+.canales-span {
+    font-size: 18px;
+    font-weight: 600;
+    color: #F3F3F3;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #2A2B3C;
+    padding-bottom: 5px;
+}
+
+.lista-canales {
+    list-style-type: none;
+}
+
+.canal-item {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+    cursor: pointer;
+}
+
+
+.canal-item i {
+    margin-right: 10px;
+    font-size: 18px;
+    color: #F3F3F3;
+}
+
+.nombre-canal-sb {
+    text-decoration: none;
+    font-size: 16px;
+    color: #F3F3F3; 
+    flex-grow: 1;
+}
+
+.canal-item.active {
+    background-color: #9496b351;
+    color: #F3F3F3;
+}
+
+.canal-item:hover,
+.agregar-canal:hover {
+    background-color: #9496b351;
+}
+
+.agregar-canal {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    margin-top: 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.agregar-canal i {
+    margin-right: 10px;
+    font-size: 18px;
+}
+
+.agregar-canal span {
+    font-size: 15px;
+}
+
+.agregar-canal-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #2A2B3C;
+}
+
+.span-form {
+    font-size: 15px;
+    color: #F3F3F3;
+}
+
+.nuevo-canal-input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 4px;
+    border: none;
+    background-color: #9496b351;
+    color: #F3F3F3;
+    font-size: 16px;
+    outline: none;
+    margin-top: 10px;
+}
+
+.nuevo-canal-input::placeholder {
+    font-size: 14px;
+    color: #f3f3f396;
+}
+
+.botones-formulario {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.confirmar-btn {
+    background-color: #b9ff66;
+    color: #191A23;
+}
+
+.cancelar-btn {
+    background-color: #B23B3B;
+    color: #F3F3F3;
+}
+
+.confirmar-btn,
+.cancelar-btn {
+    border: none;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 4px;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.confirmar-btn:hover,
+.cancelar-btn:hover {
+    opacity: 0.9;
+}
+
+.error-nuevo-canal {
+    font-size: 12px;
+    margin-top: 10px;
+    color: #ff4d4d;
+}
+
+@media (min-width: 769px) {
+    .menu-toggle-btn {
+        display: none; 
+    }
+
+    .side-bar {
+        width: 300px;
+    }
+
+    .sidebar-content {
+        max-height: none; 
+    }
+
+    .side-bar:not(.menu-abierto) .sidebar-content {
+        overflow-y: hidden;
+    }
+
+}
+
+@media (max-width: 768px) {
+    .side-bar {
+        width: 100%;
+        border-top-right-radius: 0px;
+        border-top-left-radius: 0px;
+    }
+
+    .menu-toggle-btn {
+        display: block; 
+    }
+
+    .menu-abierto .sidebar-content {
+        max-height: 500px; 
+    }
+
+    .side-bar:not(.menu-abierto) .sidebar-content {
+        overflow-y: hidden;
+    }
+
+    .nombre-entorno-sb{
+        font-size: 16px;
+    }
+
+    .canales-span {
+        font-size: 16px;
+    }
+
+    .nombre-canal-sb {
+        font-size: 14px;
+    }
+
+    .span-form {
+        font-size: 14px;
+    }
+    
+    .nuevo-canal-input {
+        font-size: 14px;
+    }
+    
+    .confirmar-btn,
+    .cancelar-btn {
+        font-size: 12px;
+    }
+}

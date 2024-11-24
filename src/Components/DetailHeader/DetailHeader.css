@@ -1,0 +1,94 @@
+.detail-header {
+    background-color: #111118;
+    padding: 15px;
+    display: flex;
+    position: relative;
+}
+
+.input-busqueda {
+    width: 100%;
+    max-width: 500px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #222330;
+    color: #F3F3F3;
+    font-size: 16px;
+    outline: none;
+    transition: background-color 0.3s;
+    margin: 0 auto;
+    display: block;
+}
+
+.input-busqueda::placeholder {
+    color: #9496B3;
+    font-size: 16px;
+}
+
+.input-busqueda:focus {
+    background-color: #2A2B3C;
+}
+
+.boton-salir {
+    display: flex;
+    align-items: center;
+    background-color: #B23B3B;
+    color: #F3F3F3;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    position: absolute;
+    right: 20px;
+    transition: background-color 0.3s;
+}
+
+.boton-salir:hover {
+    opacity: 0.9;
+}
+
+@media (max-width: 480px) {
+    .detail-header {
+        padding: 10px;
+        flex-direction: row; 
+        justify-content: space-evenly; 
+    }
+
+    .input-busqueda {
+        max-width: 240px; 
+        padding: 8px;
+        font-size: 14px;
+    }
+
+    .input-busqueda::placeholder {
+        font-size: 12px;
+    }
+
+    .boton-salir {
+        font-size: 12px; 
+        padding: 8px 12px; 
+        position: relative; 
+        right: auto; 
+    }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+    .detail-header {
+        padding: 12px;
+        flex-direction: row; 
+        justify-content: space-evenly; 
+    }
+
+    .input-busqueda {
+        max-width: 330px;
+        font-size: 15px; 
+        padding: 9px; 
+    }
+
+    .boton-salir {
+        font-size: 13px; 
+        padding: 9px 14px; 
+        right: 15px; 
+    }
+}

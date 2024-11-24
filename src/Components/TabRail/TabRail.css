@@ -1,0 +1,227 @@
+.tab-rail {
+    background-color: #111118;
+    width: 90px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.main-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    list-style-type: none;
+    padding: 10px;
+    flex: 0 0 auto;
+}
+
+.menu-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 65px;
+    height: 65px;
+    border-radius: 10px;
+    padding: 10px;
+    color: #F3F3F3;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    margin-bottom: 20px;
+}
+
+.menu-item:hover {
+    background-color: #9496b351;
+}
+
+.menu-item i {
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.menu-item span {
+    font-size: 11px;
+    text-align: center;
+}
+
+.img-entorno {
+    width: 60px;
+    height: 60px;
+    background-color:#2A2B3C;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.img-entorno img {
+    width: 70%;
+    height: 70%;
+    object-fit: cover;
+}
+
+.profile-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    color: #F3F3F3;
+    position: relative;
+    width: 100%;
+}
+
+.contenedor-foto-usuario-tr {
+    width: 50px;
+    height: 50px;
+    border-radius: 10px; 
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.foto-usuario-tr {
+    width: 100%;
+}
+
+.nombre-usuario-tr {
+    display: none;
+    position: absolute;
+    bottom: 25px;
+    left: 50px;
+    margin-bottom: 10px;
+    background-color: #F3F3F3;
+    color: #191A23;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border-bottom-left-radius: 0px;
+    white-space: nowrap;
+    font-size: 12px;
+    font-weight: 600;
+    width: max-content;
+}
+
+.profile-item:hover .nombre-usuario-tr{
+    display: block;
+}
+
+
+@media (max-width: 480px) {
+    .tab-rail {
+        height: auto;
+        width: 100%;
+        padding: 5px; 
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .main-menu {
+        flex-direction: row;
+        justify-content: space-around; 
+        width: calc(100% - 45px); 
+        margin-right: 5px; 
+    }
+
+    .menu-item,
+    .img-entorno,
+    .contenedor-foto-usuario-tr {
+        width: 35px; 
+        height: 35px; 
+        margin: 0 2px;
+    }
+
+    .menu-item i {
+        font-size: 16px; 
+    }
+
+    .menu-item span {
+        display: none;
+    }
+
+    .img-entorno img {
+        width: 80%;
+        height: 80%;
+    }
+
+    .secondary-menu {
+        display: flex;
+        align-items: center;
+    }
+
+    .profile-item {
+        display: flex;
+        align-items: center;
+        padding: 0;
+        margin: 0;
+    }
+
+    .profile-item:hover .nombre-usuario-tr {
+        display: none;
+    }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+    .tab-rail {
+        height: auto;
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+    }
+
+    .main-menu {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: calc(100% - 60px);
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .menu-item,
+    .img-entorno {
+        width: 60px;
+        height: 60px;
+        margin: 0 4px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .menu-item i {
+        font-size: 24px;
+    }
+
+    .menu-item span {
+        display: 10px; 
+    }
+
+    .img-entorno img {
+        width: 80%;
+        height: 80%;
+        object-fit: contain;
+    }
+
+    .secondary-menu {
+        display: flex;
+        align-items: center;
+    }
+
+    .profile-item {
+        display: flex;
+        align-items: center;
+        padding: 0;
+        margin: 0;
+        position: relative;
+    }
+
+    .profile-item:hover .nombre-usuario-tr {
+        display: none;
+    }
+}
