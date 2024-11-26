@@ -9,33 +9,33 @@ const VerifyEmail = () => {
     const [statusMessage, setStatusMessage] = useState('')
     const [isLoading, setIsLoading] = useState(true)
 
-    useEffect(() => {
-        const verifyEmail = async () => {
-            try {
-                setStatusMessage('Verificando...')
-                const response = await GET(`${import.meta.env.VITE_URL_BACK}/api/auth/verify/${verification_token}`, {
-                    body: {},
-                    headers: getUnauthenticatedHeaders(),
-                })
-                console.log('Response status:', response.status)
-                if (response.ok) {
-                    setStatusMessage('¡Correo verificado con éxito!')
-                    setTimeout(() => {
-                        navigate('/login')
-                    }, 10000)
-                }
-                else {
-                    setStatusMessage(response.payload.detail || 'Error al verificar el correo')
-                }
+    const verifyEmail = async () => {
+        try {
+            setStatusMessage('Verificando...')
+            const response = await GET(`${import.meta.env.VITE_URL_BACK}/api/auth/verify/${verification_token}`, {
+                body: {},
+                headers: getUnauthenticatedHeaders(),
+            })
+            console.log('Response status:', response.status)
+            if (response.ok) {
+                setStatusMessage('¡Correo verificado con éxito!')
+                setTimeout(() => {
+                    navigate('/login')
+                }, 10000)
             }
-            catch (error) {
-                console.error('Error al verificar el correo:', error)
-                setStatusMessage('Ocurrió un error al verificar el correo electrónico.')
-            }
-            finally {
-                setIsLoading(false)
+            else {
+                setStatusMessage(response.payload.detail || 'Error al verificar el correo')
             }
         }
+        catch (error) {
+            console.error('Error al verificar el correo:', error)
+            setStatusMessage('Ocurrió un error al verificar el correo electrónico.')
+        }
+        finally {
+            setIsLoading(false)
+        }
+    }
+    useEffect(() => {
         if (verification_token) {
             verifyEmail()
         }

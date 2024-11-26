@@ -11,7 +11,13 @@ const Register = () => {
         password: '',
     })
 
-    const { validateForm } = useFormValidation(form_values_state)
+    const { validateForm } = useFormValidation(form_values_state, {
+        validateName: true,
+        validateEmail: true,
+        validatePassword: true,
+        validatePasswordComplexity: true
+    })
+
     const [formErrorsState, setFormErrorsState] = useState({})
     const [successMessage, setSuccessMessage] = useState('')
     const [isSubmitting, setIsSubmitting] = useState(false)
@@ -27,7 +33,6 @@ const Register = () => {
         if (isSubmitting) return
 
         setIsSubmitting(true)
-
         setSuccessMessage('')
         setFormErrorsState({})
 
