@@ -31,11 +31,11 @@ export const GlobalContextProvider = ({ children }) => {
         const entornosActualizados = [...entornos, nuevoEntornoconId]
         setEntornos(entornosActualizados)
         guardarEntornosTrabajo(entornosActualizados)
-        navigate('/')
+        navigate('/home')
     }
 
     const handleCancel = () => {
-        navigate('/')
+        navigate('/home')
     }
 
     const handleCreateWorkspace = () => {

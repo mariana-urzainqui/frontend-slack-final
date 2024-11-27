@@ -18,10 +18,10 @@ const VerifyEmail = () => {
             })
             console.log('Response status:', response.status)
             if (response.ok) {
-                setStatusMessage('¡Correo verificado con éxito!')
+                setStatusMessage("¡Correo verificado con éxito! Serás redirigido a inicio de sesión en segundos")
                 setTimeout(() => {
                     navigate('/login')
-                }, 10000)
+                }, 6000)
             }
             else {
                 setStatusMessage(response.payload.detail || 'Error al verificar el correo')

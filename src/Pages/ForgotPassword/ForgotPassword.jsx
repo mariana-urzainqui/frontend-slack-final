@@ -10,7 +10,7 @@ const ForgotPassword = () => {
     })
 
     const { validateForm } = useFormValidation(form_values_state, {
-        validateEmail: true, // Solo validamos el email
+        validateEmail: true, 
     })
 
     const [formErrorsState, setFormErrorsState] = useState({})
@@ -41,12 +41,15 @@ const ForgotPassword = () => {
 
             if (response.payload?.errors) {
                 setFormErrorsState(response.payload.errors)
-            } else {
+            } 
+            else {
                 setSuccessMessage('Te hemos enviado un correo con las instrucciones para restablecer tu contraseña.')
             }
-        } catch (error) {
+        } 
+        catch (error) {
             console.error('Error al enviar la solicitud de restablecimiento de contraseña:', error)
-        } finally {
+        } 
+        finally {
             setIsSubmitting(false)
         }
     }
@@ -73,7 +76,6 @@ const ForgotPassword = () => {
                 <button type="submit" disabled={isSubmitting}>
                     {isSubmitting ? 'Enviando instrucciones...' : 'Enviar instrucciones'}
                 </button>
- 
             </form>
             {successMessage && <span className="success">{successMessage}</span>}
             <span>
