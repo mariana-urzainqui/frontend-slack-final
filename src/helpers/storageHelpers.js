@@ -1,17 +1,26 @@
 import { DATA_ENTORNOS_TRABAJO, USUARIO_LOGUEADO } from "../data/dataWorkspaces"
+import { GET, getAuthenticatedHeaders } from "../fetching/http.fetching"
 
 export const guardarEntornosTrabajo = (entornos) => {
     localStorage.setItem('entornosTrabajo', JSON.stringify(entornos))
     return entornos
 }
 
-export const obtenerEntornosTrabajo = () => {
-    const entornosGuardados = localStorage.getItem('entornosTrabajo')
-    if (entornosGuardados) {
-        return JSON.parse(entornosGuardados)
+export const obtenerEntornosTrabajo = async () => {
+    try{
+        const response = await GET(`${import.meta.env.VITE_URL_BACK}/api/workspace`,
+            getAuthenticatedHeaders()
+        )
+        if(result.status === 'success'){
+            return result.data.workspaces
+        }
+        else{
+            console.error('Error al obtener los workspaces:', result.message)
+            return []
+        }
     }
-    else {
-        return guardarEntornosTrabajo(DATA_ENTORNOS_TRABAJO)
+    catch(error){
+        console.log('Error al obtener los workspaces:', result.message)
     }
 }
 

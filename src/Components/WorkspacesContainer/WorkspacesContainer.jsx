@@ -1,36 +1,35 @@
 import React from 'react'
 import WorkspaceItem from '../WorkspaceItem/WorkspaceItem'
-import { useGlobalContext } from '../../Context/GlobalContext'
 import './WorkspacesContainer.css'
 
-const WorkspacesContainer = ({ entornos, onIniciarSlack }) => {
-    const { handleCreateWorkspace, usuarioLogueado } = useGlobalContext()
-
+const WorkspacesContainer = ({ workspaces, onIniciarSlack }) => {
+    const userInfo = JSON.parse(sessionStorage.getItem('user_info'))
+    const userEmail = userInfo?.email || 'Cargando...'
     return (
         <div className='workspaces-container'>
             <div className='workspaces-header'>
                 <div className='titulo-header'>
-                    <span>Espacios de trabajo para {usuarioLogueado?.email || 'cargando...'} </span>
+                    <span>Espacios de trabajo para {userEmail}</span>
                 </div>
                 <div className='lista-entornos'>
-                    {entornos.map((entorno) => {
-                        const primerCanal = entorno.canales && entorno.canales[0];
-                        const primerCanalId = primerCanal ? primerCanal.id : null;
+                    {workspaces.map((workspace) => {
+                        const firstChannel = workspace.channels && workspace.channels[0]
+                        const firstChannelId = firstChannel ? firstChannel.id : null
                         return (
                             <WorkspaceItem
-                                key={entorno.id}
-                                entorno={entorno}
-                                id_workspace={entorno.id}
-                                id_canal={primerCanalId}
+                                key={workspace.id}
+                                workspace={workspace}
+                                id_workspace={workspace.id}
+                                id_canal={firstChannelId}
                                 onIniciarSlack={onIniciarSlack}
                             />
-                        );
+                        )
                     })}
                 </div>
             </div>
             <div className='crear-workspace-container'>
                 <p>¿Quieres usar Slack con otro equipo?</p>
-                    <button className='btn-crear-nuevo'onClick={handleCreateWorkspace}>CREAR UN NUEVO ESPACIO DE TRABAJO</button>
+                <button className='btn-crear-nuevo'>CREAR UN NUEVO ESPACIO DE TRABAJO</button>
             </div>
         </div>
     )

@@ -9,11 +9,10 @@ export const DATA_ENTORNOS_TRABAJO = [
     {
         nombreEntorno: 'Equipo Desarrollo',
         id: 1, 
-        descripcion: 'Equipo encargado del desarrollo de productos',
         fotoEntorno: '/assets/images/workspaces/desarrollo.png',
         miembros: [
             { 
-                nombreMiembro: 'Ana', 
+                nombreMiembro: 'Ana',   
                 id: 101, 
                 fotoPerfil: '/assets/images/profile-pictures/ana.avif' 
             },
@@ -47,7 +46,6 @@ export const DATA_ENTORNOS_TRABAJO = [
             { 
                 nombreCanal: 'General',
                 id: 201,
-                descripcion: 'Canal general para discusiones del equipo',
                 mensajes: [
                     { 
                         autor: 'Ana', 
@@ -82,7 +80,6 @@ export const DATA_ENTORNOS_TRABAJO = [
             {
                 nombreCanal: 'Bug Reports',
                 id: 202,
-                descripcion: 'Canal para reportar y discutir bugs',
                 mensajes: [
                     { 
                         autor: 'Luis', 
@@ -110,7 +107,6 @@ export const DATA_ENTORNOS_TRABAJO = [
             {
                 nombreCanal: 'Feedback',
                 id: 203,
-                descripcion: 'Canal para dar y recibir feedback',
                 mensajes: [
                     { 
                         autor: 'Carlos', 
@@ -140,7 +136,6 @@ export const DATA_ENTORNOS_TRABAJO = [
     {
         nombreEntorno: 'Equipo Marketing',
         id: 2,
-        descripcion: 'Equipo encargado del marketing y promoción',
         fotoEntorno: '/assets/images/workspaces/marketing.png',
         miembros: [
             { 
@@ -178,7 +173,6 @@ export const DATA_ENTORNOS_TRABAJO = [
             {
                 nombreCanal: 'Campañas',
                 id: 204, 
-                descripcion: 'Canal para discutir campañas de marketing',
                 mensajes: [
                     { 
                         autor: 'Pedro', 
@@ -206,7 +200,6 @@ export const DATA_ENTORNOS_TRABAJO = [
             {
                 nombreCanal: 'Eventos',
                 id: 205, 
-                descripcion: 'Canal para coordinar eventos y promociones',
                 mensajes: [
                     { 
                         autor: 'Jorge', 
@@ -234,7 +227,6 @@ export const DATA_ENTORNOS_TRABAJO = [
             {
                 nombreCanal: 'Estrategias',
                 id: 206, 
-                descripcion: 'Canal para discutir estrategias de marketing',
                 mensajes: [
                     { 
                         autor: 'Sofía', 
@@ -264,7 +256,6 @@ export const DATA_ENTORNOS_TRABAJO = [
     {
         nombreEntorno: 'Equipo Ventas',
         id: 3, 
-        descripcion: 'Equipo encargado de ventas y relaciones con clientes',
         fotoEntorno: '/assets/images/workspaces/ventas.png',
         miembros: [
             { 
@@ -302,7 +293,6 @@ export const DATA_ENTORNOS_TRABAJO = [
             {
                 nombreCanal: 'Clientes',
                 id: 207, 
-                descripcion: 'Canal para gestionar relaciones con clientes',
                 mensajes: [
                     { 
                         autor: 'Raúl', 
@@ -330,7 +320,6 @@ export const DATA_ENTORNOS_TRABAJO = [
             {
                 nombreCanal: 'Ventas',
                 id: 208, 
-                descripcion: 'Canal para discutir estrategias y resultados de ventas',
                 mensajes: [
                     { 
                         autor: 'Tomás', 
@@ -358,7 +347,6 @@ export const DATA_ENTORNOS_TRABAJO = [
             {
                 nombreCanal: 'Reportes',
                 id: 209, 
-                descripcion: 'Canal para compartir y discutir reportes de ventas',
                 mensajes: [
                     { 
                         autor: 'Manuel', 
