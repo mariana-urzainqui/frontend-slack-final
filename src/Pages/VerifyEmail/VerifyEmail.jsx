@@ -12,10 +12,7 @@ const VerifyEmail = () => {
     const verifyEmail = async () => {
         try {
             setStatusMessage('Verificando...')
-            const response = await GET(`${import.meta.env.VITE_URL_BACK}/api/auth/verify/${verification_token}`, {
-                body: {},
-                headers: getUnauthenticatedHeaders(),
-            })
+            const response = await GET(`${import.meta.env.VITE_URL_BACK}/api/auth/verify/${verification_token}`, getUnauthenticatedHeaders())
             console.log('Response status:', response.status)
             if (response.ok) {
                 setStatusMessage("¡Correo verificado con éxito! Serás redirigido a inicio de sesión en segundos")

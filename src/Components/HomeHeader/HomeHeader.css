@@ -11,6 +11,7 @@
     align-items: center;
     width: 100%;
     max-width: 1200px;
+    flex-wrap: nowrap;
 }
 
 .logo-container {
@@ -23,8 +24,8 @@
     transition: all 0.3s ease;
 }
 
-.btn-crear-nuevo-header {
-    background-color: #191A23;
+.btn-logout {
+    background-color: #B23B3B;
     border: none;
     padding: 10px 20px;
     font-size: 16px;
@@ -33,6 +34,7 @@
     text-decoration: none;
     cursor: pointer;
     transition: all 0.3s ease;
+    align-self: center;
 }
 
 
@@ -42,7 +44,7 @@
     }
 
     .header-nav {
-        flex-direction: column;
+        flex-direction: row;
         align-items: flex-start;
     }
 
@@ -50,17 +52,19 @@
         height: 80px;
     }
 
-    .btn-crear-nuevo-header {
-        display: none;
+    .btn-logout { 
+        padding: 8px 12px; 
+        font-size: 12px; 
+        border-radius: 10px; 
+        margin-left: auto;  
     }
 }
-
 @media (min-width: 481px) and (max-width:768px) {
     .logo-container img {
         height: 80px;
     }
 
-    .btn-crear-nuevo-header {
+    .btn-logout {
         padding: 8px 16px;
         font-size: 14px;
         border-radius: 14px;

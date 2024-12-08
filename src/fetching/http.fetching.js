@@ -42,7 +42,7 @@ export const PUT = async (URL_API, { body, headers }) => {
     }
 }
 
-export const GET = async (URL_API, { headers }) => {
+export const GET = async (URL_API, headers) => {
     try {
         const response = await fetch(URL_API, {
             method: 'GET',
@@ -71,7 +71,7 @@ export const DELETE = async (URL_API, { headers, body = null }) => {
         }
 
         if (body) {
-            requestOptions.body = JSON.stringify(body)
+            requestOptions.body = JSON.stringify(body)  
         }
 
         const response = await fetch(URL_API, requestOptions)
@@ -97,13 +97,13 @@ const getUnauthenticatedHeaders = () => {
     return unauthenticatedHeaders
 }
 
-const getAuthenticatedHeaders = () => {
-    const authenticatedHeaders = new Headers()
-    authenticatedHeaders.set('Content-Type', 'application/json')
-    authenticatedHeaders.set('x-api-key', import.meta.env.REACT_APP_API_KEY)
-    authenticatedHeaders.set('Authorization', 'Bearer ' + sessionStorage.getItem('access_token'))
-    return authenticatedHeaders
-}
+    const getAuthenticatedHeaders = () => {
+        const authenticatedHeaders = new Headers()
+        authenticatedHeaders.set('Content-Type', 'application/json')
+        authenticatedHeaders.set('x-api-key', import.meta.env.VITE_API_KEY)
+        authenticatedHeaders.set('Authorization', 'Bearer ' + sessionStorage.getItem('access_token'))
+        return authenticatedHeaders
+    }
 
 
 

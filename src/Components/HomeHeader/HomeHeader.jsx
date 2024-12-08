@@ -1,9 +1,15 @@
 import React from 'react'
 import './HomeHeader.css'
-import { useGlobalContext } from '../../Context/GlobalContext'
+import { useNavigate } from 'react-router-dom'
 
 const Header = () => {
-    const { handleCreateWorkspace } = useGlobalContext()
+    const navigate = useNavigate()
+    
+    const handleLogout = () => {
+        sessionStorage.removeItem('access_token')
+        sessionStorage.removeItem('user_info')
+        navigate('/login')
+    }
 
     return (
         <header className='home-header'>
@@ -11,7 +17,7 @@ const Header = () => {
             <div className='logo-container'>
                 <img src="./assets/images/slack-logo.png" alt="Logo de slack" />
             </div>
-            <button className='btn-crear-nuevo-header' onClick={handleCreateWorkspace}>CREAR UN NUEVO ESPACIO DE TRABAJO</button>
+            <button onClick={handleLogout} className="btn-logout">Cerrar sesión</button>
             </nav>
         </header>
     )

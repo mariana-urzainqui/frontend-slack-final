@@ -1,23 +1,15 @@
-import './Home.css'
+import React from "react"
+import { useNavigate } from "react-router-dom"
+import useWorkspaces from "../../Hooks/useWorkspaces"
 import { HomeHeader, WorkspacesContainer } from '../../Components'
-import { useNavigate } from 'react-router-dom'
-import useWorkspaces from '../../Hooks/useWorkspaces'
-
+import './Home.css'
 
 const Home = () => {
-    const {workspaces, loading, error } = useWorkspaces
     const navigate = useNavigate()
+    const { workspaces, loading, error } = useWorkspaces()
 
     const handleIniciarSlack = (id_workspace, id_canal) => {
         navigate(`/workspace/${id_workspace}/${id_canal}`)
-    }
-
-    if (loading){
-        return <div>Loading...</div>
-    }
-
-    if(error){
-        return <div>Error: {error}</div>
     }
 
     return (
@@ -29,10 +21,12 @@ const Home = () => {
                         <img src="./assets/images/waving-hand.png" alt="Mano saludando" />
                         <h1>¡Hola de nuevo!</h1>
                     </div>
-                    <WorkspacesContainer workspaces={workspaces} onIniciarSlack={handleIniciarSlack} />
+                    {loading && <p>Cargando tus workspaces...</p>}
+                    {!loading  && (
+                        <WorkspacesContainer entornos={workspaces} onIniciarSlack={handleIniciarSlack} error={error} />                      
+                    )}                    
                 </div>
             </main>
-
         </div>
     )
 }
