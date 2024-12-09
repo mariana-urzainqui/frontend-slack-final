@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import './VerifyEmail.css'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { GET, getUnauthenticatedHeaders, POST } from '../../fetching/http.fetching'
 
 const VerifyEmail = () => {
@@ -38,12 +39,23 @@ const VerifyEmail = () => {
         }
     }, [verification_token, navigate])
     return (
-        <div>
-            <h1>Verificación de Correo</h1>
-            {isLoading
-                ? (<p>Cargando...</p>)
-                : (<p>{statusMessage}</p>)
-            }
+        <div className="verify-email-container">
+            <div className='logo-container'>
+                <img src="/assets/images/slack-logo.png" alt="Logo" />
+            </div>
+            <div className="verify-email-box">
+                <img src="/assets/images/email-verified.png" alt="Correo verificado" className="verify-email-image" />
+                <h1 className="verify-email-title">Verificación de Correo</h1>
+                {isLoading ? (
+                    <p className="verify-email-status">Cargando...</p>
+                ) : (
+                    <p className="verify-email-status">{statusMessage}</p>
+                )}
+            </div>
+            <div className="verify-email-footer">
+                <span>Si quieres iniciar sesión,  </span>
+                <Link to="/" className="verify-email-home-link">haz clic aquí</Link>.
+            </div>
         </div>
     )
 }
