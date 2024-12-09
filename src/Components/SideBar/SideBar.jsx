@@ -1,15 +1,49 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './SideBar.css'
-import { Link } from 'react-router-dom'
-import { useGlobalContext } from '../../Context/GlobalContext'
-import { validarForm } from '../../helpers/validationHelpers'
+import { Link, useNavigate } from 'react-router-dom'
+import useCreateChannel from '../../Hooks/useCreateChannel'
+import useChannels from '../../Hooks/useChannels'
+import useForm from '../../Hooks/useForm'
+import useFormValidation from '../../Hooks/useFormValidation'
 
 const SideBar = ({ entorno, canalSeleccionado }) => {
-    const { agregarCanal } = useGlobalContext()
+    const navigate = useNavigate()
+    const { createChannel, loading, error: createChannelError, success } = useCreateChannel()
+    const { form_values_state, handleChangeInputValue, clearForm } = useForm({
+        channelName: ''
+    })
+    const { formErrors, validateForm } = useFormValidation(form_values_state, {
+        validateChannelName: true,
+    })
+    const [formErrorsState, setFormErrorsState] = useState({})
     const [agregarNuevoCanal, setAgregarNuevoCanal] = useState(false)
-    const [nombreNuevoCanal, setNombreNuevoCanal] = useState('')
-    const [error, setError] = useState('')
     const [menuDesplegado, setMenuDesplegado] = useState(false)
+    const { channels, loading: channelsLoading, error: channelsError, fetchChannels } = useChannels(entorno._id)
+    const [localChannels, setLocalChannels] = useState([])
+
+    useEffect(() => {
+        if (channels) {
+            setLocalChannels(channels)
+        }
+    }, [channels])
+
+    useEffect(() => {
+        console.log('Success object:', success);
+        console.log('Current channels:', channels);
+    }, [success, channels]);
+
+    //SOLUCIONAR ESTO PORQUE NO FUNCIONA
+    useEffect(() => {
+        if (success && success._id) {
+            navigate(`/workspace/${entorno._id}/${success._id}`);
+            fetchChannels()
+        }
+    }, [success, navigate, entorno._id, fetchChannels])
+    
+    useEffect(() => {
+        const errors = validateForm()
+        setFormErrorsState(errors)
+    }, [form_values_state])
 
     const handleAgregarCanal = () => {
         setAgregarNuevoCanal(true)
@@ -17,25 +51,20 @@ const SideBar = ({ entorno, canalSeleccionado }) => {
 
     const handleCancelar = () => {
         setAgregarNuevoCanal(false)
-        setNombreNuevoCanal('')
-        setError('')
+        clearForm()
     }
 
-    const handleCambioInput = (e) => {
-        setNombreNuevoCanal(e.target.value)
-    }
-
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
-        const errors = validarForm('', nombreNuevoCanal)
-        if (errors.nombreCanal) {
-            setError(errors.nombreCanal)
+        const errors = validateForm()
+        if (Object.keys(errors).length > 0) {
+            setFormErrorsState(errors)
             return
         }
-        agregarCanal(entorno.id, nombreNuevoCanal)
+
+        await createChannel(entorno._id, form_values_state.channelName)
         setAgregarNuevoCanal(false)
-        setNombreNuevoCanal('')
-        setError('')
+        clearForm()
     }
 
     const toggleMenu = () => {
@@ -49,55 +78,64 @@ const SideBar = ({ entorno, canalSeleccionado }) => {
     return (
         <div className={`side-bar ${menuDesplegado ? 'menu-abierto' : ''}`}>
             <div className='sidebar-header'>
-                <span className='nombre-entorno-sb'>{entorno.nombreEntorno}</span>
+                <span className='nombre-entorno-sb'>{entorno.workspaceName}</span>
                 <button className="menu-toggle-btn" onClick={toggleMenu}>
                     <i className="bi bi-list"></i>
                 </button>
             </div>
             <div className='sidebar-content'>
                 <span className='canales-span'>Canales</span>
-                <ul className='lista-canales'>
-                    {entorno.canales.map(canal => (
-                        <Link 
-                        to={`/workspace/${entorno.id}/${canal.id}`} 
-                        key={canal.id} 
-                        className='nombre-canal-sb'
-                        onClick={handleCanalClick}
-                        >
-                            <li className={`canal-item ${canal.id === canalSeleccionado ? 'active' : ''}`}>
-                                <i className="bi bi-hash"></i>
-                                <span>{canal.nombreCanal}</span>
-                            </li>
-                        </Link>
-                    ))}
-                    {!agregarNuevoCanal
-                        ? (<li className='agregar-canal' onClick={handleAgregarCanal}>
-                            <i className="bi bi-plus-lg"></i>
-                            <span>Añadir canal</span>
-                        </li>)
-                        : (
-                            <li className='agregar-canal-form'>
-                                <form onSubmit={handleSubmit}>
-                                    <span className='span-form'>Añadir canal</span>
-                                    <input
-                                        type='text'
-                                        value={nombreNuevoCanal}
-                                        onChange={handleCambioInput}
-                                        placeholder='Nombre del nuevo canal'
-                                        className='nuevo-canal-input'
-                                    />
-                                    {error && <p className='error-nuevo-canal'>{error}</p>}
-                                    <div className='botones-formulario'>
-                                        <button className='confirmar-btn' type='submit'>Confirmar</button>
-                                        <button className='cancelar-btn' type='button' onClick={handleCancelar}>Cancelar</button>
-                                    </div>
-                                </form>
-                            </li>
-                        )}
-                </ul>
+                {channelsLoading ? (
+                    <div>Cargando canales...</div>
+                ) : channelsError ? (
+                    <div>Error: {channelsError}</div>
+                ) : (
+                    <ul className='lista-canales'>
+                        {localChannels.map(canal => (
+                            <Link 
+                                to={`/workspace/${entorno._id}/${canal._id}`} 
+                                key={canal._id} 
+                                className='nombre-canal-sb'
+                                onClick={handleCanalClick}
+                            >
+                                <li className={`canal-item ${canal._id === canalSeleccionado ? 'active' : ''}`}>
+                                    <i className="bi bi-hash"></i>
+                                    <span>{canal.channelName}</span>
+                                </li>
+                            </Link>
+                        ))}
+                        {!agregarNuevoCanal
+                            ? (<li className='agregar-canal' onClick={handleAgregarCanal}>
+                                <i className="bi bi-plus-lg"></i>
+                                <span>Añadir canal</span>
+                            </li>)
+                            : (
+                                <li className='agregar-canal-form'>
+                                    <form onSubmit={handleSubmit}>
+                                        <span className='span-form'>Añadir canal</span>
+                                        <input
+                                            type='text'
+                                            name='channelName'
+                                            value={form_values_state.channelName}
+                                            onChange={handleChangeInputValue}
+                                            placeholder='Nombre del nuevo canal'
+                                            className='nuevo-canal-input'
+                                        />
+                                        {formErrorsState.channelName && <p className='error-nuevo-canal'>{formErrorsState.channelName}</p>}
+                                        {createChannelError && <p className='error-nuevo-canal'>{createChannelError}</p>}
+                                        <div className='botones-formulario'>
+                                            <button className='confirmar-btn' type='submit' disabled={loading}>
+                                                {loading ? 'Creando...' : 'Confirmar'}
+                                            </button>
+                                            <button className='cancelar-btn' type='button' onClick={handleCancelar}>Cancelar</button>
+                                        </div>
+                                    </form>
+                                </li>
+                            )}
+                    </ul>
+                )}
             </div>
         </div>
-
     )
 }
 

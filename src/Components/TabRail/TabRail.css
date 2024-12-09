@@ -84,6 +84,8 @@
 
 .foto-usuario-tr {
     width: 100%;
+    height: 100%;  
+    object-fit: cover; 
 }
 
 .nombre-usuario-tr {
@@ -103,10 +105,9 @@
     width: max-content;
 }
 
-.profile-item:hover .nombre-usuario-tr{
+.profile-item:hover .nombre-usuario-tr {
     display: block;
 }
-
 
 @media (max-width: 480px) {
     .tab-rail {

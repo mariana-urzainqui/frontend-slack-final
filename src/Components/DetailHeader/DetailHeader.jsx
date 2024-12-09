@@ -6,16 +6,16 @@ const DetailHeader = ({ nombreEntorno, onSearch }) => {
     const navigate = useNavigate()
 
     const handleSalir = () => {
-        navigate('/')
+        navigate('/home')
     }
     
     return (
         <header className='detail-header'>
             <input 
-            type='text' 
-            className='input-busqueda'
-            placeholder={`Buscar en ${nombreEntorno}`}
-            onChange={(e) => onSearch(e.target.value)}
+                type='text' 
+                className='input-busqueda'
+                placeholder={`Buscar en ${nombreEntorno}`}
+                onChange={(e) => onSearch(e.target.value)}
             />
             <button className='boton-salir' onClick={handleSalir}>Salir</button>
         </header>

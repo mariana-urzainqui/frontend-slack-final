@@ -7,7 +7,7 @@
     flex-direction: column;
     flex-shrink: 0;
     border-top-left-radius: 15px;
-    transition: all 0.3 ease;
+    transition: all 0.3s ease;
     overflow: hidden;
 }
 
@@ -32,22 +32,21 @@
     font-size: 24px;
     border: none;
     cursor: pointer;
-    display: none;
+    display: block; 
 }
 
 .sidebar-content {
     display: flex;
     flex-direction: column;
     height: 100%;
-    overflow-y: auto;
+    overflow-y: auto; 
     padding-top: 15px;
     max-height: 0;
     transition: max-height 0.3s ease;
 }
 
-
 .menu-abierto .sidebar-content {
-    max-height: 500px;
+    max-height: 100vh;
 }
 
 .canales-span {
@@ -61,6 +60,8 @@
 
 .lista-canales {
     list-style-type: none;
+    padding: 0;
+    margin: 0;
 }
 
 .canal-item {
@@ -73,7 +74,6 @@
     cursor: pointer;
 }
 
-
 .canal-item i {
     margin-right: 10px;
     font-size: 18px;
@@ -83,7 +83,7 @@
 .nombre-canal-sb {
     text-decoration: none;
     font-size: 16px;
-    color: #F3F3F3; 
+    color: #F3F3F3;
     flex-grow: 1;
 }
 
@@ -189,7 +189,7 @@
 
 @media (min-width: 769px) {
     .menu-toggle-btn {
-        display: none; 
+        display: none;
     }
 
     .side-bar {
@@ -197,35 +197,31 @@
     }
 
     .sidebar-content {
-        max-height: none; 
+        max-height: none;
     }
-
-    .side-bar:not(.menu-abierto) .sidebar-content {
-        overflow-y: hidden;
-    }
-
 }
 
 @media (max-width: 768px) {
     .side-bar {
         width: 100%;
-        border-top-right-radius: 0px;
-        border-top-left-radius: 0px;
+        border-top-right-radius: 0;
+        border-top-left-radius: 0;
     }
 
     .menu-toggle-btn {
-        display: block; 
+        display: block;
     }
 
     .menu-abierto .sidebar-content {
-        max-height: 500px; 
+        max-height: 500px;
     }
 
     .side-bar:not(.menu-abierto) .sidebar-content {
         overflow-y: hidden;
+        max-height: 0; 
     }
 
-    .nombre-entorno-sb{
+    .nombre-entorno-sb {
         font-size: 16px;
     }
 
@@ -240,11 +236,11 @@
     .span-form {
         font-size: 14px;
     }
-    
+
     .nuevo-canal-input {
         font-size: 14px;
     }
-    
+
     .confirmar-btn,
     .cancelar-btn {
         font-size: 12px;

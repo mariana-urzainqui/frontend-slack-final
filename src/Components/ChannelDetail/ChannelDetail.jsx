@@ -1,21 +1,30 @@
-import React, { useRef, useEffect } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import './ChannelDetail.css'
 import MessageInput from '../MessageInput/MessageInput'
-import { useGlobalContext } from '../../Context/GlobalContext'
-
+import useCreateMessage from '../../Hooks/useCreateMessage'
+import useMessages from '../../Hooks/useMessages'
 
 const ChannelDetail = ({ canal, entorno, searchTerm }) => {
-    const { agregarMensaje } = useGlobalContext()
+    const { messages, loading: messagesLoading, error: messagesError } = useMessages(canal._id)
+    const { createMessage, loading: messageLoading, error: messageError, success } = useCreateMessage()
+    const [localMessages, setLocalMessages] = useState([])
     const mensajesContainerRef = useRef(null)
 
-    const obtenerFotoAutor = (autor) => {
-        const miembro = entorno.miembros.find(miembro => miembro.nombreMiembro === autor)
-        return miembro ? miembro.fotoPerfil : ''
-    }
+    useEffect(() => {
+        if (messages) {
+            setLocalMessages(messages)
+        }
+    }, [messages])
 
-    const handleEnviarMensaje = (contenido) => {
+    useEffect(() => {
+        if (success) {
+            setLocalMessages(prevMessages => [...prevMessages, success])
+        }
+    }, [success])
+
+    const handleEnviarMensaje = async (contenido) => {
         if (contenido.trim()) {
-            agregarMensaje(entorno.id, canal.id, contenido)
+            await createMessage(canal._id, contenido)
         }
     }
 
@@ -27,11 +36,11 @@ const ChannelDetail = ({ canal, entorno, searchTerm }) => {
 
     useEffect(() => {
         scrollAbajo()
-    }, [canal.mensajes])
+    }, [localMessages])
 
-    const mensajesFiltrados = canal.mensajes.filter(mensaje =>
-        mensaje.contenido.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        mensaje.autor.toLowerCase().includes(searchTerm.toLowerCase())
+    const mensajesFiltrados = localMessages.filter(mensaje =>
+        mensaje.content.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        mensaje.author.name.toLowerCase().includes(searchTerm.toLowerCase())
     )
 
     let ultimaFecha = null
@@ -40,45 +49,52 @@ const ChannelDetail = ({ canal, entorno, searchTerm }) => {
         <div className='detalle-canal'>
             <header className='header-canal'>
                 <i className="bi bi-hash"></i>
-                <span>{canal.nombreCanal}</span>
+                <span>{canal.channelName}</span>
             </header>
-            <div className='mensajes' ref={mensajesContainerRef}>
-                {mensajesFiltrados.map(mensaje => {
-                    const fecha = mensaje.fecha
-                    let mostrarFecha = false
-                    if (fecha !== ultimaFecha) {
-                        mostrarFecha = true
-                        ultimaFecha = fecha
-                    }
-                    return (
-                        <div key={mensaje.id}>
-                            {mostrarFecha &&
-                                <div className='contenedor-fecha'>
-                                    <div className='fecha'>
-                                        <span className='span-fecha'>{fecha}</span>
+            {messagesLoading ? (
+                <div>Cargando mensajes...</div>
+            ) : messagesError ? (
+                <div>Error: {messagesError}</div>
+            ) : (
+                <div className='mensajes' ref={mensajesContainerRef}>
+                    {mensajesFiltrados.map(mensaje => {
+                        const fecha = mensaje.createdAt.split('T')[0]
+                        let mostrarFecha = false
+                        if (fecha !== ultimaFecha) {
+                            mostrarFecha = true
+                            ultimaFecha = fecha
+                        }
+                        return (
+                            <div key={mensaje._id}>
+                                {mostrarFecha &&
+                                    <div className='contenedor-fecha'>
+                                        <div className='fecha'>
+                                            <span className='span-fecha'>{fecha}</span>
+                                        </div>
+                                    </div>}
+                                <div className='mensaje' >
+                                    <div className='avatar-container'>
+                                        <img src={mensaje.author.photo} alt={`Foto de perfil de ${mensaje.author.name}`} className='avatar-mensaje' /> {/* Asegúrate de que author.photo es una URL válida */}
                                     </div>
-                                </div>}
-                            <div className='mensaje' >
-                                <div className='avatar-container'>
-                                    <img src={obtenerFotoAutor(mensaje.autor)} alt={`Foto de perfil de ${mensaje.autor}`} className='avatar-mensaje' />
-                                </div>
-                                <div className='contenido-mensaje'>
-                                    <div className='mensaje-header'>
-                                        <span className='autor-mensaje'>{mensaje.autor}</span>
-                                        <span className='hora-mensaje'>{mensaje.hora}</span>
+                                    <div className='contenido-mensaje'>
+                                        <div className='mensaje-header'>
+                                            <span className='autor-mensaje'>{mensaje.author.name}</span>
+                                            <span className='hora-mensaje'>{new Date(mensaje.createdAt).toLocaleTimeString()}</span>
+                                        </div>
+                                        <p className='texto-mensaje'>{mensaje.content}</p>
                                     </div>
-                                    <p className='texto-mensaje'>{mensaje.contenido}</p>
                                 </div>
                             </div>
-                        </div>
-                    )
-                })}
-            </div>
+                        )
+                    })}
+                </div>
+            )}
             <div className='contenedor-mensaje-input'>
-                <MessageInput onEnviarMensaje={handleEnviarMensaje} nombreCanal={canal.nombreCanal} />
+                <MessageInput onEnviarMensaje={handleEnviarMensaje} nombreCanal={canal.channelName} />
             </div>
         </div>
     )
 }
 
 export default ChannelDetail
+

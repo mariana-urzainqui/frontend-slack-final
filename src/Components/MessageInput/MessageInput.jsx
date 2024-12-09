@@ -65,3 +65,4 @@ const MessageInput = ({ onEnviarMensaje, nombreCanal }) => {
 export default MessageInput
 
 
+

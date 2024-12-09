@@ -10,6 +10,7 @@ import {
   VerifyEmail,
   WorkspaceDetail
 } from './Pages'
+import ProtectedRoute from './Components/ProtectedRoute'
 
 
 const App = () => {
@@ -21,9 +22,11 @@ const App = () => {
       <Route path='/verify/:verification_token' element={<VerifyEmail />} />
       <Route path='/forgot-password' element={<ForgotPassword />} />
       <Route path='/reset-password/:reset_token' element={<ResetPassword />} />
-      <Route path='/home' element={<Home />} />
-      <Route path='/workspace/new' element={<NewWorkspace />} />
-      <Route path='/workspace/:id_workspace/:id_canal' element={<WorkspaceDetail />} />
+      <Route element={<ProtectedRoute />}>
+        <Route path='/home' element={<Home />} />
+        <Route path='/workspace/new' element={<NewWorkspace />} />
+        <Route path='/workspace/:id_workspace/:id_canal' element={<WorkspaceDetail />} />
+      </Route>
     </Routes>
   )
 }
