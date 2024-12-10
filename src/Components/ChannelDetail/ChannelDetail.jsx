@@ -67,9 +67,9 @@ const ChannelDetail = ({ canal, entorno, searchTerm }) => {
                 <span>{canal.channelName}</span>
             </header>
             {messagesLoading ? (
-                <div>Cargando mensajes...</div>
+                <div className='mensaje-carga-error'>Cargando mensajes...</div>
             ) : messagesError ? (
-                <div>Error: {messagesError}</div>
+                <div className='mensaje-carga-error'>Error: {messagesError}</div>
             ) : (
                 <div className='mensajes' ref={mensajesContainerRef}>
                     {mensajesFiltrados.map(mensaje => {

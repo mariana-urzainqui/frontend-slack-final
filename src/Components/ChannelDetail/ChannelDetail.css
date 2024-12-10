@@ -125,6 +125,13 @@
     flex-shrink: 0;
 }
 
+.mensaje-carga-error {
+    color: #F3F3F3; 
+    text-align: center;
+    padding: 20px;
+    font-size: 16px;
+}
+
 @media (max-width: 768px) {
     .detalle-canal {
         padding: 15px;
@@ -173,6 +180,14 @@
     .texto-mensaje {
         font-size: 12px;
     }
+
+    .mensaje-carga-error{
+        font-size: 14px;
+    }
+
+    .bi-trash{
+        font-size: 14px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -218,5 +233,13 @@
 
     .texto-mensaje {
         font-size: 11px;
+    }
+
+    .mensaje-carga-error{
+        font-size: 12px;
+    }
+
+    .bi-trash{
+        font-size: 12px;
     }
 }
