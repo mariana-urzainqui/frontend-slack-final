@@ -43,7 +43,6 @@ const LoginForm = () => {
         }
 
         try {
-            console.log('URL BACKEND: ', import.meta.env.VITE_URL_BACK)
             const response = await POST(`${import.meta.env.VITE_URL_BACK}/api/auth/login`, {
                 body: form_values_state,
                 headers: getUnauthenticatedHeaders(),

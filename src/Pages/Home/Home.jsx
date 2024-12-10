@@ -21,7 +21,7 @@ const Home = () => {
                         <img src="./assets/images/waving-hand.png" alt="Mano saludando" />
                         <h1>¡Hola de nuevo!</h1>
                     </div>
-                    {loading && <p>Cargando tus workspaces...</p>}
+                    {loading && <p className="mensaje-cargando">Cargando tus workspaces...</p>}
                     {!loading  && (
                         <WorkspacesContainer entornos={workspaces} onIniciarSlack={handleIniciarSlack} error={error} />                      
                     )}                    

@@ -15,15 +15,15 @@ const WorkspaceDetail = () => {
     const entornoActual = workspaces.find(workspace => String(workspace._id) === String(id_workspace))
 
     if (loadingWorkspaces || loadingChannels) {
-        return <div>Cargando datos...</div>
+        return <div className='mensaje-cargando'>Cargando datos...</div>
     }
 
     if (workspacesError || channelsError) {
-        return <div>Error: {workspacesError || channelsError}</div>
+        return <div className='mensaje-error'>Error: {workspacesError || channelsError}</div>
     }
 
     if (!entornoActual) {
-        return <div>Espacio de trabajo no encontrado</div>
+        return <div className='mensaje-error'>Espacio de trabajo no encontrado</div>
     }
 
     const canal = id_canal
