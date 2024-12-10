@@ -62,10 +62,6 @@
     font-weight: 500;
 }
 
-.verify-email-home-link:hover {
-    text-decoration: underline;
-    color: #ffffff;
-}
 
 @media (max-width: 480px) {
     .verify-email-box {

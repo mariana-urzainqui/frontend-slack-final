@@ -19,7 +19,7 @@ const VerifyEmail = () => {
                 setStatusMessage("¡Correo verificado con éxito! Serás redirigido a inicio de sesión en segundos")
                 setTimeout(() => {
                     navigate('/login')
-                }, 6000)
+                }, 8000)
             }
             else {
                 setStatusMessage(response.payload.detail || 'Error al verificar el correo')
