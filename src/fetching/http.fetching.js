@@ -63,18 +63,12 @@ export const GET = async (URL_API, headers) => {
     }
 }
 
-export const DELETE = async (URL_API, { headers, body = null }) => {
+export const DELETE = async (URL_API, headers) => {
     try {
-        const requestOptions = {
+        const response = await fetch(URL_API, {
             method: 'DELETE',
             headers: headers,
-        }
-
-        if (body) {
-            requestOptions.body = JSON.stringify(body)  
-        }
-
-        const response = await fetch(URL_API, requestOptions)
+        })
 
         if (!response.ok) {
             const errorResponse = await response.json()
@@ -89,6 +83,7 @@ export const DELETE = async (URL_API, { headers, body = null }) => {
         throw error
     }
 }
+
 
 const getUnauthenticatedHeaders = () => {
     const unauthenticatedHeaders = new Headers()

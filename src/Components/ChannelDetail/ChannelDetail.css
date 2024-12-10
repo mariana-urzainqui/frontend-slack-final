@@ -101,6 +101,17 @@
 .hora-mensaje {
     font-size: 10px;
     color: #ABABC4;
+    margin-right: auto; 
+}
+
+.bi-trash {
+    cursor: pointer; 
+    font-size: 16px; 
+    color: #ABABC4; 
+}
+
+.bi-trash:hover {
+    color: #ff4d4d; 
 }
 
 .texto-mensaje {

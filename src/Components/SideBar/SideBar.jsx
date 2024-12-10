@@ -27,10 +27,11 @@ const SideBar = ({ entorno, canalSeleccionado }) => {
     }, [channels])
 
     useEffect(() => {
-        if (success) {
-            setLocalChannels(prevChannels => [...prevChannels, success])
+        if (success && success._id) {
+            window.location.href = `/workspace/${entorno._id}/${success._id}`
         }
     }, [success])
+    
 
     useEffect(() => {
         const errors = validateForm()
