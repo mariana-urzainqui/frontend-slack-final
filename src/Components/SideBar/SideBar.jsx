@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import './SideBar.css'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import useCreateChannel from '../../Hooks/useCreateChannel'
 import useChannels from '../../Hooks/useChannels'
 import useForm from '../../Hooks/useForm'
 import useFormValidation from '../../Hooks/useFormValidation'
 
 const SideBar = ({ entorno, canalSeleccionado }) => {
-    const navigate = useNavigate()
     const { createChannel, loading, error: createChannelError, success } = useCreateChannel()
     const { form_values_state, handleChangeInputValue, clearForm } = useForm({
         channelName: ''
@@ -18,7 +17,7 @@ const SideBar = ({ entorno, canalSeleccionado }) => {
     const [formErrorsState, setFormErrorsState] = useState({})
     const [agregarNuevoCanal, setAgregarNuevoCanal] = useState(false)
     const [menuDesplegado, setMenuDesplegado] = useState(false)
-    const { channels, loading: channelsLoading, error: channelsError, fetchChannels } = useChannels(entorno._id)
+    const { channels, loading: channelsLoading, error: channelsError } = useChannels(entorno._id)
     const [localChannels, setLocalChannels] = useState([])
 
     useEffect(() => {
@@ -28,22 +27,15 @@ const SideBar = ({ entorno, canalSeleccionado }) => {
     }, [channels])
 
     useEffect(() => {
-        console.log('Success object:', success);
-        console.log('Current channels:', channels);
-    }, [success, channels]);
-
-    //SOLUCIONAR ESTO PORQUE NO FUNCIONA
-    useEffect(() => {
-        if (success && success._id) {
-            navigate(`/workspace/${entorno._id}/${success._id}`);
-            fetchChannels()
+        if (success) {
+            setLocalChannels(prevChannels => [...prevChannels, success])
         }
-    }, [success, navigate, entorno._id, fetchChannels])
-    
+    }, [success])
+
     useEffect(() => {
         const errors = validateForm()
         setFormErrorsState(errors)
-    }, [form_values_state])
+    }, [form_values_state]) 
 
     const handleAgregarCanal = () => {
         setAgregarNuevoCanal(true)

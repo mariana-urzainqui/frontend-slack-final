@@ -63,4 +63,3 @@ const WorkspaceDetail = () => {
 }
 
 export default WorkspaceDetail
-

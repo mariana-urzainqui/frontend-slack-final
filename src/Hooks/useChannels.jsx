@@ -5,42 +5,31 @@ const useChannels = (workspaceId) => {
     const [channels, setChannels] = useState([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
-    const [key, setKey] = useState(0) 
-
-    const fetchChannels = async () => {
-        if (!workspaceId) return;
-
-        try {
-            setLoading(true)
-            const response = await GET(`${import.meta.env.VITE_URL_BACK}/api/channel/${workspaceId}/channels`, 
-                getAuthenticatedHeaders())
-            
-            if (response.ok) {
-                const fetchedChannels = response.payload.channels || []
-                setChannels(fetchedChannels)
-                setError(null)
-            } else {
-                setError(response.message || 'Error al obtener los canales')
-                setChannels([])
-            }
-        } catch (error) {
-            setError('Error en la solicitud')
-            setChannels([])
-            console.error('Error al obtener los canales:', error)
-        } finally {
-            setLoading(false)
-        }
-    }
 
     useEffect(() => {
-        fetchChannels()
-    }, [workspaceId, key]) 
+        const fetchChannels = async () => {
+            try {
+                const response = await GET(`${import.meta.env.VITE_URL_BACK}/api/channel/${workspaceId}/channels`, getAuthenticatedHeaders())
 
-    const forceReload = () => {
-        setKey(prev => prev + 1)
-    }
+                if (response.ok) {
+                    setChannels(response.payload.channels)
+                } else {
+                    setError(response.message || 'Error al obtener los canales')
+                }
+            } catch (error) {
+                setError('Error en la solicitud')
+                console.error('Error al obtener los canales:', error)
+            } finally {
+                setLoading(false)
+            }
+        }
 
-    return { channels, loading, error, fetchChannels: forceReload }
+        if (workspaceId) {
+            fetchChannels()
+        }
+    }, [workspaceId])
+
+    return { channels, loading, error }
 }
 
 export default useChannels

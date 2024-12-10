@@ -12,19 +12,25 @@ const useCreateChannel = () => {
         setSuccess(null)
 
         try {
+            const headers = getAuthenticatedHeaders()
+            const requestBody = { channelName }
+
             const response = await POST(`${import.meta.env.VITE_URL_BACK}/api/channel/${workspaceId}/create`, {
-                body: { channelName },
-                headers: getAuthenticatedHeaders()
+                body: requestBody,
+                headers: headers
             })
 
             if (response.ok) {
                 setSuccess(response.payload.channel)
+                return response.payload.channel
             } else {
                 setError(response.message || 'Error al crear el canal')
+                return null
             }
         } catch (error) {
             setError('Error en la solicitud')
             console.error('Error al crear el canal:', error)
+            return null
         } finally {
             setLoading(false)
         }
