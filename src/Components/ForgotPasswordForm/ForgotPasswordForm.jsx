@@ -3,7 +3,8 @@ import './ForgotPasswordForm.css'
 import useForm from '../../Hooks/useForm'
 import useFormValidation from '../../Hooks/useFormValidation'
 import { getUnauthenticatedHeaders, POST } from '../../fetching/http.fetching'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import useFormFocus from '../../Hooks/useFormFocus'
 
 const ForgotPasswordForm = () => {
     const { form_values_state, handleChangeInputValue } = useForm({
@@ -14,24 +15,31 @@ const ForgotPasswordForm = () => {
         validateEmail: true,
     })
 
+    const { focusedField, handleFocus, handleBlur, shouldShowError, markSubmitted } = useFormFocus()
+
     const [formErrorsState, setFormErrorsState] = useState({})
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [successMessage, setSuccessMessage] = useState('')
     const [emailSent, setEmailSent] = useState(false) 
-    const navigate = useNavigate()
+    const [backendErrors, setBackendErrors] = useState({})
+
 
     useEffect(() => {
         const errors = validateForm(form_values_state)
         setFormErrorsState(errors)
     }, [form_values_state])
 
+
     const handleSubmitForgotPasswordForm = async (event) => {
         event.preventDefault()
 
         if (isSubmitting || emailSent) return 
 
+        markSubmitted()
+
         setIsSubmitting(true)
         setFormErrorsState({})
+        setBackendErrors({})
         setSuccessMessage('') 
 
         const errors = validateForm()
@@ -48,7 +56,16 @@ const ForgotPasswordForm = () => {
             })
 
             if (response.payload?.errors) {
-                setFormErrorsState(response.payload.errors)
+                const backendErrorsObj = {}
+                Object.keys(response.payload.errors).forEach(key => {
+                    if(key === 'email'){
+                        backendErrorsObj.email = response.payload.errors[key]
+                    }
+                    else{
+                        backendErrorsObj.general = response.payload.errors[key]
+                    }
+                })
+                setBackendErrors(backendErrorsObj)
             } else {
                 setSuccessMessage('Te hemos enviado un correo con las instrucciones para restablecer tu contraseña.')
                 setEmailSent(true) 
@@ -59,7 +76,7 @@ const ForgotPasswordForm = () => {
         }
         catch (error) {
             console.error('Error al enviar la solicitud de restablecimiento de contraseña:', error)
-            setFormErrorsState({ general: 'Hubo un error al procesar tu solicitud, por favor intenta nuevamente.' })
+            setBackendErrors({ general: 'Hubo un error al procesar tu solicitud, por favor intenta nuevamente.' })
         }
         finally {
             setIsSubmitting(false)
@@ -77,9 +94,9 @@ const ForgotPasswordForm = () => {
                 </span>
             )}
 
-            {formErrorsState.general && (
+            {backendErrors.general && (
                 <div className="forgot-password-error forgot-password-error-general">
-                    {formErrorsState.general}
+                    {backendErrors.general}
                 </div>
             )}
 
@@ -93,10 +110,12 @@ const ForgotPasswordForm = () => {
                     placeholder="pepe@gmail.com"
                     value={form_values_state.email}
                     onChange={handleChangeInputValue}
+                    onFocus={() => handleFocus('email')}
+                    onBlur={handleBlur}
                     disabled={isSubmitting}
                 />
-                {formErrorsState.email && (
-                    <span className="forgot-password-error">{formErrorsState.email}</span>
+                {(shouldShowError('email', formErrorsState, backendErrors)) && (
+                    <span className="forgot-password-error">{formErrorsState.email || backendErrors.email}</span>
                 )}
             </div>
 
