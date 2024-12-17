@@ -66,7 +66,8 @@ const ForgotPasswordForm = () => {
                     }
                 })
                 setBackendErrors(backendErrorsObj)
-            } else {
+            } 
+            else {
                 setSuccessMessage('Te hemos enviado un correo con las instrucciones para restablecer tu contraseña.')
                 setEmailSent(true) 
                 setTimeout(() => {

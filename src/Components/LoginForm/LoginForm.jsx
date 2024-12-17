@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import useForm from '../../Hooks/useForm'
 import useFormValidation from '../../Hooks/useFormValidation'
 import { getUnauthenticatedHeaders, POST } from '../../fetching/http.fetching'
+import useFormFocus from '../../Hooks/useFormFocus'
 
 const LoginForm = () => {
     const navigate = useNavigate()
@@ -18,8 +19,11 @@ const LoginForm = () => {
         validatePassword: true,
     })
 
+    const { focusedField, handleFocus, handleBlur, shouldShowError, markSubmitted } = useFormFocus()
+
     const [formErrorsState, setFormErrorsState] = useState({})
     const [isSubmitting, setIsSubmitting] = useState(false)
+    const [backendErrors, setBackendErrors] = useState({})
 
     useEffect(() => {
         const errors = validateForm(form_values_state)
@@ -29,10 +33,11 @@ const LoginForm = () => {
     const handleSubmitLoginForm = async (event) => {
         event.preventDefault()
 
-        if (isSubmitting) return
+        markSubmitted()
 
         setIsSubmitting(true)
         setFormErrorsState({})
+        setBackendErrors({})
 
         const errors = validateForm()
 
@@ -49,32 +54,26 @@ const LoginForm = () => {
             })
 
             if (response.payload?.errors) {
-                setFormErrorsState(response.payload.errors)
+                const backendErrorsObj = {}
+                Object.keys(response.payload.errors).forEach(key => {
+                    backendErrorsObj[key] = response.payload.errors[key]
+                })
 
-                if (response.payload.errors.general) {
-                    setFormErrorsState(prevState => ({
-                        ...prevState,
-                        general: response.payload.errors.general,
-                    }))
-                }
+                console.log('Backend errors objeto:', backendErrorsObj)
 
-                if (response.payload.errors.email) {
-                    setFormErrorsState(prevState => ({
-                        ...prevState,
-                        email: response.payload.errors.email,
-                    }))
-                }
-            } 
+                setBackendErrors(backendErrorsObj)
+            }
             else {
                 const access_token = response.payload.token
                 sessionStorage.setItem('access_token', access_token)
                 sessionStorage.setItem('user_info', JSON.stringify(response.payload.user))
                 navigate('/home')
             }
-        } 
+        }
         catch (error) {
             console.error('Error al iniciar sesión:', error)
-        } 
+            setBackendErrors({ general: 'Hubo un error al procesar tu solicitud, por favor intenta nuevamente' })
+        }
         finally {
             setIsSubmitting(false)
         }
@@ -82,6 +81,11 @@ const LoginForm = () => {
 
     return (
         <form className='login-form' onSubmit={handleSubmitLoginForm}>
+            {backendErrors.general && (
+                <div className='login-error login-error-general'>
+                    {backendErrors.general}
+                </div>
+            )}
             <div className='login-form-group'>
                 <label htmlFor="email" className='login-label'>Correo electrónico:</label>
                 <input
@@ -92,8 +96,11 @@ const LoginForm = () => {
                     placeholder="pepe@gmail.com"
                     value={form_values_state.email}
                     onChange={handleChangeInputValue}
+                    onFocus={() => handleFocus('email')}
+                    onBlur={handleBlur}
+                    disabled={isSubmitting}
                 />
-                {formErrorsState.email && <span className="login-error">{formErrorsState.email}</span>}
+                {(shouldShowError('email', formErrorsState, backendErrors)) && (<span className="login-error">{formErrorsState.email || backendErrors.email}</span>)}
             </div>
 
             <div className='login-form-group'>
@@ -106,21 +113,16 @@ const LoginForm = () => {
                     placeholder="***********"
                     value={form_values_state.password}
                     onChange={handleChangeInputValue}
+                    onFocus={() => handleFocus('password')}
+                    onBlur={handleBlur}
+                    disabled={isSubmitting}
                 />
-
-                {formErrorsState.password && (
+                {(shouldShowError('password', formErrorsState, backendErrors)) && (
                     <div className="login-error">
-                        {Array.isArray(formErrorsState.password)
-                            ? formErrorsState.password.map((error, index) => (
-                                <p key={index}>{error}</p>
-                            ))
-                            : <p>{formErrorsState.password}</p>
-                        }
+                        <p>{formErrorsState.password || backendErrors.password}</p>
                     </div>
                 )}
             </div>
-
-            {formErrorsState.general && <div className="login-error login-error-general">{formErrorsState.general}</div>}
 
             <button type="submit" className='login-button' disabled={isSubmitting}>
                 {isSubmitting ? 'Iniciando sesión...' : 'Iniciar sesión'}
