@@ -65,7 +65,7 @@ const WorkspaceForm = () => {
                     onChange={handleChangeInputValue}
                     placeholder='Introduce el nombre del espacio'
                 />
-                {formErrorsState.workspaceName && <span className='mensaje-error'>{formErrorsState.workspaceName}</span>}
+                {formErrorsState.workspaceName && <span className='mensaje-error-ws'>{formErrorsState.workspaceName}</span>}
             </div>
             <div className='form-group'>
                 <label htmlFor="channelName">Nombre del canal #:</label>
@@ -77,9 +77,9 @@ const WorkspaceForm = () => {
                     onChange={handleChangeInputValue}
                     placeholder='Introduce el nombre del canal'
                 />
-                {formErrorsState.channelName && <span className='mensaje-error'>{formErrorsState.channelName}</span>}
+                {formErrorsState.channelName && <span className='mensaje-error-ws'>{formErrorsState.channelName}</span>}
             </div>
-            {backendError && <span className='mensaje-error'>{backendError}</span>}
+            {backendError && <span className='mensaje-error-ws'>{backendError}</span>}
             <div className='botones-form'>
                 <button type='submit' className='btn-crear-entorno' disabled={loading || isSubmitting}>
                     {loading || isSubmitting ? 'Creando...' : 'Crear'}

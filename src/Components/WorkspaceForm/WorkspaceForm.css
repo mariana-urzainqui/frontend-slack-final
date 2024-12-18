@@ -55,7 +55,7 @@
     color: #F3F3F3;
 }
 
-.mensaje-error {
+.mensaje-error-ws {
     color: #ff4d4d;
     font-size: 13px;
     margin: 1px 0 10px 0;
@@ -91,7 +91,7 @@
         padding: 12px;
         font-size: 14px;
     }
-    .mensaje-error{
+    .mensaje-error-ws{
         font-size: 9px;
         margin-bottom: 6px;
     }
@@ -112,7 +112,7 @@
         width: auto;
     }
 
-    .mensaje-error {
+    .mensaje-error-ws {
         font-size: 11px;
         margin-bottom: 8px;
     }

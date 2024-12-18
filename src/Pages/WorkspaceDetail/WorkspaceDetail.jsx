@@ -10,16 +10,16 @@ const WorkspaceDetail = () => {
     const [searchTerm, setSearchTerm] = useState('')
 
     const { workspaces, loading: loadingWorkspaces, error: workspacesError } = useWorkspaces()
-    const { channels, loading: loadingChannels, error: channelsError } = useChannels(id_workspace)
+
 
     const entornoActual = workspaces.find(workspace => String(workspace._id) === String(id_workspace))
 
-    if (loadingWorkspaces || loadingChannels) {
+    if (loadingWorkspaces) {
         return <div className='mensaje-cargando'>Cargando datos...</div>
     }
 
-    if (workspacesError || channelsError) {
-        return <div className='mensaje-error'>Error: {workspacesError || channelsError}</div>
+    if (workspacesError) {
+        return <div className='mensaje-error'>Error: {workspacesError}</div>
     }
 
     if (!entornoActual) {
@@ -27,8 +27,8 @@ const WorkspaceDetail = () => {
     }
 
     const canal = id_canal
-        ? channels.find(canal => String(canal._id) === String(id_canal))
-        : channels[0]
+        ? entornoActual.channels.find(canal => String(canal._id) === String(id_canal))
+        : entornoActual.channels[0]
 
     if (!canal) {
         return <div>No hay canales disponibles</div>
