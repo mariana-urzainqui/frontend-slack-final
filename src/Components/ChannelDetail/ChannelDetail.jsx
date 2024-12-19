@@ -5,12 +5,12 @@ import useCreateMessage from '../../Hooks/useCreateMessage'
 import useMessages from '../../Hooks/useMessages'
 import { DELETE, getAuthenticatedHeaders } from '../../fetching/http.fetching'
 
-
 const ChannelDetail = ({ canal, entorno, searchTerm }) => {
     const { messages, loading: messagesLoading, error: messagesError } = useMessages(canal._id)
     const { createMessage, loading: messageLoading, error: messageError, success } = useCreateMessage()
     const [localMessages, setLocalMessages] = useState([])
     const mensajesContainerRef = useRef(null)
+    const usuarioLogueado = JSON.parse(sessionStorage.getItem('user_info')) 
 
     useEffect(() => {
         if (messages) {
@@ -95,7 +95,9 @@ const ChannelDetail = ({ canal, entorno, searchTerm }) => {
                                         <div className='mensaje-header'>
                                             <span className='autor-mensaje'>{mensaje.author.name}</span>
                                             <span className='hora-mensaje'>{new Date(mensaje.createdAt).toLocaleTimeString()}</span>
-                                            <i className="bi bi-trash" onClick={() => handleEliminarMensaje(mensaje._id)}></i> 
+                                            {mensaje.author._id === usuarioLogueado.id && ( 
+                                                <i className="bi bi-trash" onClick={() => handleEliminarMensaje(mensaje._id)}></i> 
+                                            )}
                                         </div>
                                         <p className='texto-mensaje'>{mensaje.content}</p>
                                     </div>
