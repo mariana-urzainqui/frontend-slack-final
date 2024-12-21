@@ -23,15 +23,18 @@ const useCreateChannel = () => {
             if (response.ok) {
                 setSuccess(response.payload.channel)
                 return response.payload.channel
-            } else {
+            } 
+            else {
                 setError(response.message || 'Error al crear el canal')
                 return null
             }
-        } catch (error) {
+        } 
+        catch (error) {
             setError('Error en la solicitud')
             console.error('Error al crear el canal:', error)
             return null
-        } finally {
+        } 
+        finally {
             setLoading(false)
         }
     }

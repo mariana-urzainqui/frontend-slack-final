@@ -58,9 +58,6 @@ const LoginForm = () => {
                 Object.keys(response.payload.errors).forEach(key => {
                     backendErrorsObj[key] = response.payload.errors[key]
                 })
-
-                console.log('Backend errors objeto:', backendErrorsObj)
-
                 setBackendErrors(backendErrorsObj)
             }
             else {

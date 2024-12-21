@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import useWorkspaces from '../../Hooks/useWorkspaces'
-import useChannels from '../../Hooks/useChannels'
 import { ChannelDetail, DetailHeader, SideBar, TabRail } from '../../Components'
 import './WorkspaceDetail.css'
 

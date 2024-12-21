@@ -45,10 +45,12 @@ const ChannelDetail = ({ canal, entorno, searchTerm }) => {
             const response = await DELETE(`${import.meta.env.VITE_URL_BACK}/api/message/${mensajeId}/delete`, getAuthenticatedHeaders())
             if (response.ok) {
                 setLocalMessages(prevMessages => prevMessages.filter(mensaje => mensaje._id !== mensajeId))
-            } else {
+            } 
+            else {
                 console.error('Error al eliminar el mensaje:', response.message)
             }
-        } catch (error) {
+        } 
+        catch (error) {
             console.error('Error al eliminar el mensaje:', error)
         }
     }

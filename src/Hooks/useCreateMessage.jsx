@@ -19,13 +19,16 @@ const useCreateMessage = () => {
 
             if (response.ok) {
                 setSuccess(response.payload.message)
-            } else {
+            } 
+            else {
                 setError(response.message || 'Error al crear el mensaje')
             }
-        } catch (error) {
+        } 
+        catch (error) {
             setError('Error en la solicitud')
             console.error('Error al crear el mensaje:', error)
-        } finally {
+        } 
+        finally {
             setLoading(false)
         }
     }

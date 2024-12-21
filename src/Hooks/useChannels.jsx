@@ -13,13 +13,16 @@ const useChannels = (workspaceId) => {
 
                 if (response.ok) {
                     setChannels(response.payload.channels)
-                } else {
+                } 
+                else {
                     setError(response.message || 'Error al obtener los canales')
                 }
-            } catch (error) {
+            } 
+            catch (error) {
                 setError('Error en la solicitud')
                 console.error('Error al obtener los canales:', error)
-            } finally {
+            } 
+            finally {
                 setLoading(false)
             }
         }

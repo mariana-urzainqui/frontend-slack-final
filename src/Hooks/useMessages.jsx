@@ -17,13 +17,16 @@ const useMessages = (channelId) => {
 
                 if (response.ok) {
                     setMessages(response.payload.messages)
-                } else {
+                } 
+                else {
                     setError(response.message || 'Error al obtener los mensajes')
                 }
-            } catch (error) {
+            } 
+            catch (error) {
                 setError('Error en la solicitud')
                 console.error('Error al obtener los mensajes:', error)
-            } finally {
+            } 
+            finally {
                 setLoading(false)
             }
         }

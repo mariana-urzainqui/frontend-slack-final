@@ -30,8 +30,8 @@ const WorkspacesContainer = ({ entornos, onIniciarSlack, error }) => {
                     {entornos.length > 0 
                     ? (
                         entornos.map((entorno) => {
-                            const primerCanal = entorno.channels && entorno.channels[0];
-                            const primerCanalId = primerCanal ? primerCanal._id : null;
+                            const primerCanal = entorno.channels && entorno.channels[0]
+                            const primerCanalId = primerCanal ? primerCanal._id : null
                             return (
                                 <WorkspaceItem
                                 key={entorno._id} 
